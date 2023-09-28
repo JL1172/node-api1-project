@@ -9,20 +9,27 @@ import { Hidden } from './components/Hidden';
 import SearchForm from './components/forms/SearchForm';
 
 function App() {
-  const [data,initialGet,searchById,changeSearchValue,closeAlerts,getUserData,
-  pushModification, toggleEditMode, changeEditHandler] = useData(initialData); 
+  const [data, initialGet, searchById, changeSearchValue, closeAlerts, getUserData,
+    pushModification, toggleEditMode, changeEditHandler,
+    initializeDeletion,
+    deleteUser,
+  ] = useData(initialData);
   return (
     <StyledApp>
-    <GlobalContext.Provider value={{data,initialGet,searchById,changeSearchValue,closeAlerts,getUserData,pushModification,toggleEditMode,changeEditHandler}}>
-      <SearchForm />
-      <UserContext.Provider value = {[]}>
-        {data.userManager.usersAreVisible && <User />}
-      </UserContext.Provider>
-      <FormContext.Provider value = {[]}>
-        {data.userManager.userAddMode && <AddUserForm />}
-      </FormContext.Provider>
-    <Hidden/>
-    </GlobalContext.Provider>
+      <GlobalContext.Provider value={{
+        data, initialGet, searchById, changeSearchValue, closeAlerts,
+        initializeDeletion,deleteUser,
+        getUserData, pushModification, toggleEditMode, changeEditHandler
+      }}>
+        <SearchForm />
+        <UserContext.Provider value={[]}>
+          {data.userManager.usersAreVisible && <User />}
+        </UserContext.Provider>
+        <FormContext.Provider value={[]}>
+          {data.userManager.userAddMode && <AddUserForm />}
+        </FormContext.Provider>
+        <Hidden />
+      </GlobalContext.Provider>
     </StyledApp>
   );
 }

@@ -14,3 +14,6 @@ export const getDataById = (id) => {
 export const editData = (id,modifiedContent) => {
     return axios.put(`${base}/api/users/${id}`,modifiedContent)
 }
+export const deleteData = (id) => {
+    return axios.delete(`${base}/api/users/${id}`);
+}

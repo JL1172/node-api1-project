@@ -62,6 +62,49 @@ justify-content : flex-start;
 flex-direction : column;
 background-color :whitesmoke;
 position : relative;
+#delete1 {
+    margin : 1.5rem;
+    flex-basis : 10rem;
+    display : flex;
+    justify-content : space-evenly;
+    flex-direction : column;
+    align-items : center;
+    color : azure;
+    font-size : 20px;
+    background-color : rgb(168, 182, 181);
+    position : relative;
+    transition : .1s ease-in-out;
+    z-index : 2;
+    #row {
+        display : flex;
+        width : 15vw;
+        justify-content : space-evenly;
+    }
+    button {
+    border : 1px solid azure;
+    background-color : transparent;
+    transition : .1s ease-in-out;
+    border-radius : 5px;
+    width : 6vw;
+    color : azure;
+}
+button:active {
+    transform : scale(105%);
+}
+button:hover {
+    background-color : white;
+    color : rgb(168, 182, 181);
+    transition : .1s ease-in-out; 
+    outline : 1px solid azure;
+    outline-offset : 6px;
+}
+}
+#edit2 {
+    position : absolute;
+    left : -3rem;
+    top : 0rem;
+    color : darkred;
+}
 button {
     border : 1px solid azure;
     background-color : transparent;

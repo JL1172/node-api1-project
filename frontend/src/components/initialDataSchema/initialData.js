@@ -3,6 +3,9 @@
 const userSchema = {
     users : [],
     usersAreVisible : true,
+
+    home : true,
+    userById : false,
     
     userDeleteMode : false,
     userIdToDelete : "",

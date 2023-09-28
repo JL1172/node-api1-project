@@ -4,27 +4,35 @@ import { GlobalContext } from "../contexts/contextHandlers";
 import Spinner1 from "../spinner/spinner";
 
 export default function User() {
-    const { data, getUserData, toggleEditMode, changeEditHandler,pushModification } = useContext(GlobalContext);
+    const { data, getUserData, toggleEditMode, changeEditHandler,pushModification, initializeDeletion,deleteUser } = useContext(GlobalContext);
     const users = data.userManager.users;
-    console.log(data.userManager.updatedUserBody)
+    const deleteMode = data.userManager.userDeleteMode;
+    const idOfDeletedUser = data.userManager.userIdToDelete;
+    const home = data.userManager.home;
+    const userById = data.userManager.userById;
     return (
         <StyledUser>
             {data.userManager.spinnerOn ?
                 <Spinner1 />
                 :
                 <>
-                    {users.map(n => {
-                        if (users.length === 1 && !data.userManager.userEditMode) {
+                {!deleteMode ? 
+                    users.map(n => {
+                        if (!home && userById) {
                             return <div key={n.id} className="users">
                                 <span className="movingGeo"></span>
                                 <span className="movingGeo2"></span>
-                                <div><span className="contents">Name:</span> {n.name}</div>
+                                <div style = {{position : "relative"}}><span className="contents">Name:</span> {n.name}
+                                {<span id = "edit2" onClick={(e)=>initializeDeletion(e,n.id)} className="material-symbols-outlined">
+                                    delete
+                                </span>}
+                                </div>
                                 <div><span className="contents">Bio:</span> {n.bio}</div>
                                 {<span onClick={getUserData} className="material-symbols-outlined">
                                     close
                                 </span>}
                             </div>
-                        } else if (users.length === 1 && data.userManager.userEditMode) {
+                        } else if (data.userManager.userEditMode && home) {
                             return <div style = {{position : "relative"}} key={n.id} className="users">
                                 <span className="movingGeo"></span>
                                 <span className="movingGeo2"></span>
@@ -37,17 +45,32 @@ export default function User() {
                                 </span>}
                                 <button id = "sub" onClick={()=> pushModification(data.userManager.userBody.id,data.userManager.userBody)}>submit change</button>
                             </div>
-                        } else {
+                        } else  {
                             return <div key={n.id} className="users">
                                 <span className="movingGeo"></span>
                                 <span className="movingGeo2"></span>
-                                <div onClick={() => toggleEditMode(n.id)} style={{ position: 'relative' }}><span className="contents">Name:</span> {n.name}  <span id="edit" className="material-symbols-outlined">
+                                <div onClick={() => toggleEditMode(n.id)} style={{ position: 'relative' }}>
+                                    <span className="contents">Name:</span> {n.name}<span id="edit" className="material-symbols-outlined">
                                     edit
-                                </span></div>
+                                </span>
+                                <div style = {{position : "relative"}}>
+                                <span id = "edit2" onClick={(e)=>initializeDeletion(e,n.id)} className="material-symbols-outlined">
+                                    delete
+                                </span>
+                                </div>
+                                </div>
                                 <div><span className="contents">Bio:</span> {n.bio}</div>
                             </div>
                         }
-                    })}
+                    }) : 
+                    <div id = "delete1">
+                        <h3>Are you sure you want to delete this user?</h3>
+                        <div id = "row">
+                        <button onClick={(e)=> deleteUser(e,idOfDeletedUser)}>Yes</button>
+                        <button  onClick={(e)=>initializeDeletion(e,"")} >No</button>
+                        </div>
+                    </div>
+                    }
                     <span className="movingGeo3"></span></>}
         </StyledUser>
     )

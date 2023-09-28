@@ -1,21 +1,25 @@
 import { useState } from "react"
-import { editData, getData, getDataById } from "../axios/actions";
+import { deleteData, editData, getData, getDataById } from "../axios/actions";
 import { StyledSearch } from "../../styles/StyledSearch";
 
 
 export const useData = (initialData) => {
     const [data,setData] = useState(initialData); 
     
+    //!flat get 
     const initialGet = (data1) => {
         setData({...data, userManager : {...data.userManager, users : data1}})
     }
     
     const getUserData = () => {
         getData().then(res=> {
-            setData({...data, userManager : {...data.userManager, users : res.data,userEditMode : false}})
+            setData({...data, userManager : {...data.userManager, users : res.data,userEditMode : false,userIdToDelete : "", userDeleteMode : false,
+            userById : false,
+        }})
         })
     }
-    
+    //!flat get 
+    //!get by id
     const changeSearchValue = (e) => {
         e.stopPropagation(); 
         setData({...data, userManager : {...data.userManager, userIdToSearch : (e.target.value)}})
@@ -26,7 +30,10 @@ export const useData = (initialData) => {
                 getDataById(id).then(res=> {
                     const fetchedUser = res.data;
                     setTimeout(()=>{
-                    setData({...data, userManager : {...data.userManager, users : [fetchedUser], spinnerOn : false, userIdToSearch : ""}})
+                    setData({...data, userManager : {...data.userManager, 
+                        users : [fetchedUser], spinnerOn : false, userIdToSearch : "",
+                        userById : true, home : false,
+                    }})
                 },100)
                 }).catch(err => {
                     const newMessage = (err.response.data.message);
@@ -36,9 +43,13 @@ export const useData = (initialData) => {
                 }
                 )
     }
+    //!get by id
+    //!put
     const toggleEditMode = (id) => {
         const setUser = data.userManager.users.find(n => n.id == id);
-        setData({...data, userManager : {...data.userManager, updatedUserBody : null, userEditMode : !data.userManager.userEditMode, users : [setUser], userBody : setUser, userEditedId : id}});
+        setData({...data, userManager : {...data.userManager, userById : !data.userManager.userById,
+             updatedUserBody : null, userEditMode : !data.userManager.userEditMode,
+             users : [setUser], userBody : setUser, userEditedId : id}});
     }
     const changeEditHandler = e => {
         setData({...data, userManager : {...data.userManager, userBody : {...data.userManager.userBody, 
@@ -58,8 +69,29 @@ export const useData = (initialData) => {
                 setData({...data, message : newMessage, spinnerOn : false})
             },100)
         })}}
-        
-
+        //!put
+        //!delete
+        const initializeDeletion = (e,id) => {
+            e.stopPropagation();
+            setData({...data, userManager : {...data.userManager, userDeleteMode : !data.userManager.userDeleteMode,
+            userIdToDelete : id,
+            }})
+        }
+        const deleteUser = (e,id) => {
+            e.stopPropagation();
+            setData({...data, userManager : {...data.userManager, spinnerOn : true}})
+            deleteData(id).then(res=> {
+                getUserData();
+                setData({...data, userManager : {...data.userManager, spinnerOn : false}})
+            }).catch(err=> {
+                const newMessage = (err.response.data.message);
+                setTimeout(()=>{
+                    setData({...data, message : newMessage, spinnerOn : false})
+                },100)
+            })
+        }
+        //!delete
+    
 
     const closeAlerts = () => {
         setData({...data, message : ""})
@@ -74,5 +106,7 @@ export const useData = (initialData) => {
         pushModification,
         toggleEditMode,
         changeEditHandler,
+        initializeDeletion,
+        deleteUser,
     ]
 }
