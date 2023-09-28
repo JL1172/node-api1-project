@@ -25,6 +25,9 @@ export const useData = (initialData) => {
         setData({...data, userManager : {...data.userManager, userIdToSearch : (e.target.value)}})
     } 
     const searchById = (e,id) => {
+        if (!id) {
+            setData({...data, message : "The user with the specified ID does not exist"})
+        } else {
         e.preventDefault();
         setData({...data, userManager : {...data.userManager, spinnerOn : true}})
                 getDataById(id).then(res=> {
@@ -41,7 +44,7 @@ export const useData = (initialData) => {
                         setData({...data, message : newMessage, userManager : {...data.userManager, spinnerOn : false,}})
                     },100)
                 }
-                )
+                )}
     }
     //!get by id
     //!put
@@ -91,6 +94,12 @@ export const useData = (initialData) => {
             })
         }
         //!delete
+        //!post
+        const toggleUserAdd = (e) => {
+            e.stopPropagation();
+            setData({...data, userManager : {...data.userManager, userAddMode : !data.userManager.userAddMode}})
+        }
+        //!post
     
 
     const closeAlerts = () => {
@@ -108,5 +117,6 @@ export const useData = (initialData) => {
         changeEditHandler,
         initializeDeletion,
         deleteUser,
+        toggleUserAdd,
     ]
 }
