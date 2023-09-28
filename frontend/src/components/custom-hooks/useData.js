@@ -38,18 +38,19 @@ export const useData = (initialData) => {
     }
     const toggleEditMode = (id) => {
         const setUser = data.userManager.users.find(n => n.id == id);
-        setData({...data, userManager : {...data.userManager, userEditMode : !data.userManager.userEditMode, users : [setUser], userBody : setUser, userEditedId : id}});
+        setData({...data, userManager : {...data.userManager, updatedUserBody : null, userEditMode : !data.userManager.userEditMode, users : [setUser], userBody : setUser, userEditedId : id}});
     }
     const changeEditHandler = e => {
-        setData({...data, userManager : {...data.userManager, userBody : {...data.userManager.userBody, [e.target.name] : e.target.value, updatedUserBody : true}}})
+        setData({...data, userManager : {...data.userManager, userBody : {...data.userManager.userBody, 
+            [e.target.name] : e.target.value},updatedUserBody : true}})
     }
     const pushModification = (id,modification) => {
-        if (data.userManager.updatedUserBody == 0) {
-            setData({...data, message : "Please provide name and bio for the user"})
+        if (!data.userManager.updatedUserBody) {
+            setData({...data, userManager : {...data.userManager,updatedUserBody : null }, message : "Please provide name and bio for the user"})
         } else {
         setData({...data, userManager : {...data.userManager, spinnerOn : true}})
         editData(id,modification).then(res=> {
-            setData({...data,message : "", userManager : {...data.userManager, spinnerOn : false, userBody : "",userEditedId : "",updatedUserBody : 0}})
+            setData({...data,message : "", userManager : {...data.userManager, spinnerOn : false, userBody : "",userEditedId : "",updatedUserBody : null}})
             getUserData();
         }).catch(err => {
             const newMessage = (err.response.data.message);
@@ -58,7 +59,7 @@ export const useData = (initialData) => {
             },100)
         })}}
         
-        
+
 
     const closeAlerts = () => {
         setData({...data, message : ""})
