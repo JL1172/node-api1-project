@@ -6,7 +6,7 @@ import reactstrap, { Alert } from "reactstrap";
 export default function SearchForm() {
     const { data, searchById, changeSearchValue, closeAlerts } = useContext(GlobalContext);
     return (
-        <StyledSearch>
+        <StyledSearch id = "scrolled">
             {data.message && <Alert id = "alert"color={"danger"}>{data.message}
                 <span onClick = {closeAlerts} id = "closed" className="material-symbols-outlined">
                     close

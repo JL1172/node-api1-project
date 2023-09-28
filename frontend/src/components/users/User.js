@@ -20,9 +20,9 @@ export default function User() {
                     users.map(n => {
                         if (!home && userById) {
                             return <div key={n.id} className="users">
-                                {<span id = "edit2" onClick={(e)=>initializeDeletion(e,n.id)} className="material-symbols-outlined">
+                                {<a href = "#addButton"><span id = "edit2" onClick={(e)=>initializeDeletion(e,n.id)} className="material-symbols-outlined">
                                     delete
-                                </span>}
+                                </span></a>}
                                 <span className="movingGeo"></span>
                                 <span className="movingGeo2"></span>
                                 <div ><span className="contents">Name:</span> {n.name}
@@ -47,9 +47,9 @@ export default function User() {
                             </div>
                         } else  {
                             return <div key={n.id} className="users">
-                                <span id = "edit2" onClick={(e)=>initializeDeletion(e,n.id)} className="material-symbols-outlined">
+                                <a href = "#addButton"><span id = "edit2" onClick={(e)=>initializeDeletion(e,n.id)} className="material-symbols-outlined">
                                     delete
-                                </span>
+                                </span></a>
                                 <span className="movingGeo"></span>
                                 <span className="movingGeo2"></span>
                                 <div onClick={() => toggleEditMode(n.id)} style={{ position: 'relative' }}>
@@ -63,7 +63,7 @@ export default function User() {
                         }
                     }) : 
                     <div id = "delete1">
-                        <h3>Are you sure you want to delete this user?</h3>
+                        <h3 id = "deleted">Are you sure you want to delete this user?</h3>
                         <div id = "row">
                         <button onClick={(e)=> deleteUser(e,idOfDeletedUser)}>Yes</button>
                         <button  onClick={(e)=>initializeDeletion(e,"")} >No</button>
