@@ -101,8 +101,6 @@ button:hover {
 }
 #edit2 {
     position : absolute;
-    left : -3rem;
-    top : 0rem;
     color : darkred;
 }
 button {

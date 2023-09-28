@@ -17,3 +17,6 @@ export const editData = (id,modifiedContent) => {
 export const deleteData = (id) => {
     return axios.delete(`${base}/api/users/${id}`);
 }
+export const addData = (newUser) => {
+    return axios.post(`${base}/api/users`, newUser)
+}

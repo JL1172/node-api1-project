@@ -22,7 +22,7 @@ export default function User() {
                             return <div key={n.id} className="users">
                                 <span className="movingGeo"></span>
                                 <span className="movingGeo2"></span>
-                                <div style = {{position : "relative"}}><span className="contents">Name:</span> {n.name}
+                                <div ><span className="contents">Name:</span> {n.name}
                                 {<span id = "edit2" onClick={(e)=>initializeDeletion(e,n.id)} className="material-symbols-outlined">
                                     delete
                                 </span>}
@@ -53,11 +53,9 @@ export default function User() {
                                     <span className="contents">Name:</span> {n.name}<span id="edit" className="material-symbols-outlined">
                                     edit
                                 </span>
-                                <div style = {{position : "relative"}}>
                                 <span id = "edit2" onClick={(e)=>initializeDeletion(e,n.id)} className="material-symbols-outlined">
                                     delete
                                 </span>
-                                </div>
                                 </div>
                                 <div><span className="contents">Bio:</span> {n.bio}</div>
                             </div>

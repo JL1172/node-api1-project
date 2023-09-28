@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { deleteData, editData, getData, getDataById } from "../axios/actions";
+import { addData, deleteData, editData, getData, getDataById } from "../axios/actions";
 import { StyledSearch } from "../../styles/StyledSearch";
 
 
@@ -99,6 +99,22 @@ export const useData = (initialData) => {
             e.stopPropagation();
             setData({...data, userManager : {...data.userManager, userAddMode : !data.userManager.userAddMode}})
         }
+        const changeHandlerAdd = (e) => {
+            setData({...data, userManager : {...data.userManager, userObjectToAdd : {...data.userManager.userObjectToAdd, [e.target.name] : e.target.value}}})
+        }
+        const addUser = (e,newUser) => {
+            e.preventDefault();
+            setData({...data, userManager : {...data.userManager, spinnerOn : true}})
+            addData(newUser).then(res=> {
+                setData({...data, userManager : {...data.userManager, userObjectToAdd : {name : "", bio : ""}, userAddMode : false, spinnerOn : false}})
+                getUserData();
+            }).catch(err=> {
+                const newMessage = (err.response.data.message);
+                setTimeout(()=>{
+                    setData({...data, message : newMessage, spinnerOn : false})
+                },100)
+            })
+        }
         //!post
     
 
@@ -118,5 +134,8 @@ export const useData = (initialData) => {
         initializeDeletion,
         deleteUser,
         toggleUserAdd,
+        changeHandlerAdd,
+        addUser,
+
     ]
 }

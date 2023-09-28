@@ -11,7 +11,7 @@ const userSchema = {
     userIdToDelete : "",
     
     userAddMode : false,
-    userObjectToAdd : {},
+    userObjectToAdd : {name : "", bio : ""},
     
     userEditMode : false,
     userBody : "",
