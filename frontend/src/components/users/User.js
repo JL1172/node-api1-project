@@ -20,12 +20,12 @@ export default function User() {
                     users.map(n => {
                         if (!home && userById) {
                             return <div key={n.id} className="users">
-                                <span className="movingGeo"></span>
-                                <span className="movingGeo2"></span>
-                                <div ><span className="contents">Name:</span> {n.name}
                                 {<span id = "edit2" onClick={(e)=>initializeDeletion(e,n.id)} className="material-symbols-outlined">
                                     delete
                                 </span>}
+                                <span className="movingGeo"></span>
+                                <span className="movingGeo2"></span>
+                                <div ><span className="contents">Name:</span> {n.name}
                                 </div>
                                 <div><span className="contents">Bio:</span> {n.bio}</div>
                                 {<span onClick={getUserData} className="material-symbols-outlined">
@@ -47,17 +47,18 @@ export default function User() {
                             </div>
                         } else  {
                             return <div key={n.id} className="users">
+                                <span id = "edit2" onClick={(e)=>initializeDeletion(e,n.id)} className="material-symbols-outlined">
+                                    delete
+                                </span>
                                 <span className="movingGeo"></span>
                                 <span className="movingGeo2"></span>
                                 <div onClick={() => toggleEditMode(n.id)} style={{ position: 'relative' }}>
                                     <span className="contents">Name:</span> {n.name}<span id="edit" className="material-symbols-outlined">
                                     edit
                                 </span>
-                                <span id = "edit2" onClick={(e)=>initializeDeletion(e,n.id)} className="material-symbols-outlined">
-                                    delete
-                                </span>
                                 </div>
-                                <div><span className="contents">Bio:</span> {n.bio}</div>
+                                <div><span className="contents">Bio:</span> {n.bio}
+                                </div>
                             </div>
                         }
                     }) : 

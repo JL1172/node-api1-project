@@ -102,6 +102,8 @@ button:hover {
 #edit2 {
     position : absolute;
     color : darkred;
+    right : 1rem;
+    top : 1rem;
 }
 button {
     border : 1px solid azure;

@@ -85,7 +85,7 @@ export const useData = (initialData) => {
             setData({...data, userManager : {...data.userManager, spinnerOn : true}})
             deleteData(id).then(res=> {
                 getUserData();
-                setData({...data, userManager : {...data.userManager, spinnerOn : false}})
+                setData({...data, home : true, userManager : {...data.userManager, spinnerOn : false}})
             }).catch(err=> {
                 const newMessage = (err.response.data.message);
                 setTimeout(()=>{
@@ -106,8 +106,10 @@ export const useData = (initialData) => {
             e.preventDefault();
             setData({...data, userManager : {...data.userManager, spinnerOn : true}})
             addData(newUser).then(res=> {
-                setData({...data, userManager : {...data.userManager, userObjectToAdd : {name : "", bio : ""}, userAddMode : false, spinnerOn : false}})
-                getUserData();
+                getData().then(res=> {
+                    setData({...data, userManager : {...data.userManager, users : res.data,
+                        userObjectToAdd : {name : "", bio : ""}, userAddMode : !data.userManager.userAddMode, spinnerOn : false}})
+                })
             }).catch(err=> {
                 const newMessage = (err.response.data.message);
                 setTimeout(()=>{
