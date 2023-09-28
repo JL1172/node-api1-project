@@ -58,6 +58,7 @@ export const useData = (initialData) => {
             },100)
         })}}
         
+        
 
     const closeAlerts = () => {
         setData({...data, message : ""})
